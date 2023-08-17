@@ -12,16 +12,22 @@
         <div class="list-content"></div>
 
         <!-- List Footer -->
-        <button class="add-item">
-          <p>Add Task</p>
-          <i class="fa-solid fa-plus"></i>
-        </button>
+        <div class="add-item">
+          <div class="add-item-adding active">
+            <p class="add-item-title">Add Task</p>
+            <i class="fa-solid fa-plus add-item-button"></i>
+          </div>
+          <div class="add-item-typing">
+            <input type="text" placeholder="Task name" class="add-item-input" value="">
+            <i class="fa-solid fa-check add-item-check"></i>
+          </div>
+        </div>
       </div>
     </div>
   </template>
   <template id="item_template">
     <div class="item">
-      <p>A Task</p>
+      <p class="item-name">A Task</p>
 
       <div class="btns">
         <i class="fa-solid fa-check check"></i>
@@ -44,10 +50,7 @@
       <i class="fa-solid fa-plus"></i>
     </div>
     <div class="typing">
-      <input type="text"
-       class="add-list-input"
-        placeholder="Add new list name here"
-         value="">
+      <input type="text" class="add-list-input" placeholder="Add new list name here" value="">
       <i class="fa-solid fa-plus"></i>
     </div>
   </div>

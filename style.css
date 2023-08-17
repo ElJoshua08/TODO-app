@@ -48,14 +48,17 @@ body {
 }
 
 .add-list {
+  position: absolute;
   display: none;
+  transition: all 0.6s ease;
 }
 
 .add-list.active {
   width: 90px;
   height: 90px;
-  position: relative;
+  position: absolute;
   display: block;
+  transition: all 0.6s ease;
 }
 
 .adding {
@@ -89,8 +92,13 @@ body {
   top: 25%;
   left: -100%;
   background-color: var(--light-theme-secondary-light);
-  transform: scale(0);
-  transition: transform 1s ease;
+  transform: scaleY(0);
+  transition: transform 0.6s ease;
+}
+
+.typing.active {
+  transform: scaleY(1);
+  transition: transform 0.6s ease;
 }
 
 .typing .add-list-input {
@@ -113,21 +121,22 @@ body {
 }
 
 .typing i {
- color: #fff;
- font-size: 2rem;
- margin-right: 12px;
- cursor: pointer;
-}
-
-.typing.active {
-  transform: scale(1);
-  transition: transform 1s ease;
+  color: #fff;
+  font-size: 2rem;
+  margin-right: 12px;
+  cursor: pointer;
 }
 
 .list {
   width: 350px;
   height: 600px;
-  transform: all 0.4s ease;
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
+}
+
+.list.active {
+  transform: scaleY(1);
+  transition: transform 0.4s ease;
 }
 
 .list-container {
@@ -147,8 +156,9 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--light-theme-text);
-  font-size: 3rem;
+  font-size: 3.5rem;
   border-bottom: 1px solid var(--light-theme-secondary);
+  letter-spacing: 3px;
 }
 
 .list-content {
@@ -175,11 +185,34 @@ body {
   border-radius: 1rem;
 }
 
+.item::before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: -2%;
+  background-color: var(--light-theme-primary-dark);
+  width: 105%;
+  height: 5px;
+  border-radius: 1rem;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .5s ease;
+
+}
+
+.item.checked::before {
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform .5s ease;
+}
+
 .item p {
   padding: 4%;
   color: var(--light-theme-text);
-  font-size: 1.6rem;
+  font-size: 3rem;
+  letter-spacing: 2px;
   font-weight: 600;
+  text-align: center;
 }
 
 .item .btns {
@@ -191,6 +224,8 @@ body {
   align-items: center;
   justify-content: space-around;
   transition: all 0.4s ease;
+  z-index: 2;
+  /* background-color: var(--light-theme-primary-light); */
 }
 
 .item:hover .btns {
@@ -230,23 +265,76 @@ body {
   height: 65%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   outline: 0;
   border: 0;
   border-radius: 1rem;
   background-color: var(--light-theme-primary);
+}
+
+.add-item-adding {
+  display: none;
+  transition: all 0.5s ease;
+}
+
+.add-item-adding.active {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease;
+}
+
+.add-item-title {
+  margin-left: 12px;
+  color: var(--light-theme-text);
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+}
+
+.add-item-button {
+  margin-right: 12px;
+  font-size: 2.5rem;
+  color: var(--light-theme-primary-light);
   cursor: pointer;
 }
 
-.add-item p {
-  color: var(--light-theme-text);
-  font-weight: bold;
-  margin-left: -40px;
-  font-size: 2.4rem;
+.add-item-typing {
+  display: none;
+  transition: all 0.5s ease;
 }
 
-.add-item i {
+.add-item-typing.active {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease;
+}
+
+.add-item-input {
+  border: 0;
+  margin-left: 12px;
+  outline: 0;
+  width: 70%;
+  height: 60%;
+  background-color: transparent;
+  color: var(--light-theme-text);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.add-item-input::placeholder {
+  color: #ccc;
+}
+
+.add-item-check {
+  margin-right: 12px;
   color: var(--light-theme-primary-light);
-  font-size: 2rem;
-  margin-right: -40px;
+  font-size: 2.5rem;
+  cursor: pointer;
 }
