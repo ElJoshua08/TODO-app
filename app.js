@@ -147,6 +147,22 @@ function setListColor() {
     root.style.setProperty("--text", "#ffffff");
     root.style.setProperty("--placeholder", "#ff5caf");
     root.style.setProperty("--add-item", "#831054");
+  } else if (list_color == 7) {
+    // Rojo vino
+    root.style.setProperty("--item", "#a51717");
+    root.style.setProperty("--item-check", "#cb0707");
+    root.style.setProperty("--item-edit", "#591111");
+    root.style.setProperty("--item-edit-shadow", "#2d0000");
+    root.style.setProperty("--card-background", "#e5316c");
+    root.style.setProperty("--card-shadow", "#81082f");
+    root.style.setProperty("--button-container", "#43080f");
+    root.style.setProperty("--add", "#fffff0");
+    root.style.setProperty("--check", "#ff6868");
+    root.style.setProperty("--edit", "#ffffff");
+    root.style.setProperty("--delete", "#bd0000");
+    root.style.setProperty("--text", "#fff6ea");
+    root.style.setProperty("--placeholder", "#ffeaf5");
+    root.style.setProperty("--add-item", "#4b0000");
   }
 }
 
@@ -227,7 +243,7 @@ function editList(list) {
 
   list_edit_input.value = list_name.innerHTML;
 
-  list.style.transform = `translateY(${list_edit_container.offsetHeight}px)`;
+  list.style.transform = `translateY(60px)`;
   list_edit_container.classList.add("active");
 
   list_edit_button.addEventListener("click", function () {
