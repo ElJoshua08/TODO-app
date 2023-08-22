@@ -6,7 +6,17 @@
     <div class="list">
       <div class="list-container">
         <!-- List Header -->
-        <h1 class="list-name">Name</h1>
+        <div class="list-header">
+          <h1 class="list-name">Name</h1>
+          <div class="list-header-btns">
+            <i class="fa-solid fa-pen list-edit"></i>
+            <i class="fa-solid fa-x list-delete"></i>
+          </div>
+          <div class="list-edit-container">
+            <input type="text" class="list-edit-input" placeholder="Put new list name here">
+            <button class="list-edit-button"><i class="fa-solid fa-check"></i></button>
+          </div>
+        </div>
 
         <!-- List Content -->
         <div class="list-content"></div>
@@ -31,7 +41,13 @@
 
       <div class="btns">
         <i class="fa-solid fa-check check"></i>
+        <i class="fa-solid fa-pen edit"></i>
         <i class="fa-solid fa-trash delete"></i>
+      </div>
+
+      <div class="edit-item-container">
+        <input type="text" class="edit-item-input" placeholder="Type new item name here" value="">
+        <button class="edit-item-button"><i class="fa-solid fa-check"></i></button>
       </div>
     </div>
   </template>
@@ -44,14 +60,25 @@
   <script src="https://kit.fontawesome.com/9ebca8b63b.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="light_theme">
+<body>
   <div class="add-list active">
     <div class="adding active">
       <i class="fa-solid fa-plus"></i>
     </div>
     <div class="typing">
-      <input type="text" class="add-list-input" placeholder="Add new list name here" value="">
-      <i class="fa-solid fa-plus"></i>
+      <div class="color_pick_container">
+        <span class="color color_1 active" data-color="1"></span>
+        <span class="color color_2" data-color="2"></span>
+        <span class="color color_3" data-color="3"></span>
+        <span class="color color_4" data-color="4"></span>
+        <span class="color color_5" data-color="5"></span>
+        <span class="color color_6" data-color="6"></span>
+        <span class="color color_7" data-color="7"></span>
+      </div>
+      <div class="typing_container">
+        <input type="text" class="add-list-input" placeholder="Add new list name here" value="">
+        <i class="fa-solid fa-plus add-list-button"></i>
+      </div>
     </div>
   </div>
 
