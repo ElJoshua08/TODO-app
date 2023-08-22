@@ -1,0 +1,703 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
+}
+
+:root {
+  --background: #ffffff;
+
+  --item: #8baa7f;
+  --item-check: #81cd64;
+  --item-edit: #649751;
+  --item-edit-shadow: #4d6f40;
+  --card-background: #aebda9;
+  --card-shadow: #708768;
+  --button-container: #2a6912;
+  --add: #04ff00;
+  --check: #b5f99b;
+  --edit: #bdff1e;
+  --delete: #bd7100;
+  --text: #ffffff;
+  --placeholder: #d5d39b;
+  --add-item: #43513e;
+
+  --color-1-prev: #aebda9;
+  --color-1-prev-border: #708768;
+
+  --color-2-prev: #a1e8f1;
+  --color-2-prev-border: #63b7c1;
+
+  --color-3-prev: #e1cee2;
+  --color-3-prev-border: #c6aadb;
+
+  --color-4-prev: orange;
+  --color-4-prev-border: darkorange;
+
+  --color-5-prev: #c9c9c9;
+  --color-5-prev-border: #7d7d7d;
+
+  --color-6-prev: #ffb5cd;
+  --color-6-prev-border: #bb7f92;
+}
+
+/* Animations */
+@keyframes itemAppear {
+  0% {
+    display: flex;
+    opacity: 0;
+    transform: translateX(-200%);
+    filter: brightness(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes containerItemAppear {
+  0% {
+    overflow: hidden;
+  }
+
+  100% {
+    overflow: auto;
+  }
+}
+
+@keyframes itemDisappear {
+  0% {
+    opacity: 1;
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform-origin: left;
+
+    filter: brightness(0);
+    transform: scaleX(0) translateX(-50%);
+  }
+}
+
+@keyframes editListAppear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 1;
+  }
+}
+
+@keyframes editListDisappear {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes editItemAppear {
+  0% {
+    display: flex;
+    transform: scaleX(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes editItemDisappear {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  100% {
+    display: flex;
+    transform: scaleX(0);
+  }
+}
+
+@keyframes listDelete {
+  0% {
+    opacity: 1;
+  }
+
+  70% {
+    transform: translate(40%, 0%) rotate(20deg);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(-600%, 0%) rotate(-280deg);
+    opacity: 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth !important;
+  font-size: 62.5%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  background-color: var(--background);
+}
+
+.add-list {
+  position: absolute;
+  display: none;
+  transition: all 0.6s ease;
+}
+
+.add-list.active {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  display: block;
+  transition: all 0.6s ease;
+}
+
+.adding {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transform: scale(0);
+  transition: transform 1s ease;
+
+  color: #fff;
+  background-color: #ccc;
+}
+
+.adding.active {
+  transform: scale(1);
+  transition: transform 1s ease;
+}
+
+.typing {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+
+  width: 320%;
+  height: 110%;
+  left: -100%;
+
+  transform: scaleY(0);
+  transition: transform 0.6s ease;
+}
+
+.typing.active {
+  transform: scaleY(1);
+  transition: transform 0.6s ease;
+}
+
+.color_pick_container {
+  align-self: start;
+  width: 100%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.color_pick_container .color {
+  display: inline-block;
+
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  background-color: darkgreen;
+  border: 2px solid limegreen;
+}
+
+.color[data-color="1"] {
+  background-color: var(--color-1-prev);
+  border: 2px solid var(--color-1-prev-border);
+}
+
+.color[data-color="2"] {
+  background-color: var(--color-2-prev);
+  border: 2px solid var(--color-2-prev-border);
+}
+
+.color[data-color="3"] {
+  background-color: var(--color-3-prev);
+  border: 2px solid var(--color-3-prev-border);
+}
+
+.color[data-color="4"] {
+  background-color: var(--color-4-prev);
+  border: 2px solid var(--color-4-prev-border);
+}
+
+.color[data-color="5"] {
+  background-color: var(--color-5-prev);
+  border: 2px solid var(--color-5-prev-border);
+}
+
+.color[data-color="6"] {
+  background-color: var(--color-6-prev);
+  border: 2px solid var(--color-6-prev-border);
+}
+ 
+.color.active {
+  filter: brightness(1.25);
+}
+
+.typing_container {
+  height: 45%;
+  width: 100%;
+  background-color: #ccc;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.typing_container .add-list-input {
+  outline: 0;
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 3px;
+  font-size: 2rem;
+  background-color: transparent;
+  margin-left: 12px;
+}
+
+.typing_container .add-list-input::placeholder {
+  font-weight: 300;
+  font-size: 1.7rem;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+
+.typing_container i {
+  color: #fff;
+  font-size: 2rem;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.list {
+  width: 350px;
+  height: 600px;
+  transform: scaleY(0);
+  transition: transform 0.4s ease;
+  z-index: 3;
+}
+
+.list.active {
+  transform: scaleY(1);
+  transition: transform 0.4s ease;
+}
+
+.list-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.8rem;
+
+  display: grid;
+  grid-template-rows: 60px 1fr 80px;
+
+  background-color: var(--card-background);
+  box-shadow: 5px 5px 5px 2px var(--card-shadow);
+}
+
+.list-header {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  padding: 0.62rem 0;
+  align-items: center;
+  justify-content: space-between;
+  transition: margin 0.5s ease;
+
+  border-bottom: 1px solid var(--card-shadow);
+  color: var(--text);
+}
+
+.list-name {
+  margin-left: 20px;
+  font-size: 4rem;
+}
+
+.list-header-btns {
+  display: flex;
+}
+
+.list-edit {
+  margin-right: 20px;
+  font-size: 2rem;
+  opacity: 0;
+  display: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--item-edit);
+}
+
+
+.list-header:hover .list-edit {
+  opacity: 1;
+  display: block;
+  transition: all 0.7s ease-out;
+}
+
+.list-delete {
+  margin-right: 20px;
+  font-size: 2rem;
+  opacity: 0;
+  display: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--delete);
+}
+
+.list-header:hover .list-delete {
+  opacity: 1;
+  display: block;
+  transition: all 0.7s ease-out;
+}
+
+.list-edit-container {
+  position: absolute;
+  top: -120%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform-origin: left;
+  transform: scaleX(0);
+  border-radius: 8px;
+  opacity: 0;
+
+  animation: editListDisappear 2s ease 1;
+  animation-fill-mode: forwards;
+  background-color: var(--card-background);
+  box-shadow: 5px 5px 5px 2px var(--card-shadow);
+}
+
+.list-edit-container.active {
+  transform-origin: right;
+  animation: editListAppear 2s ease 1;
+  animation-fill-mode: forwards;
+}
+
+.list-edit-input {
+  width: 75%;
+  height: 60%;
+  margin-left: 12px;
+  padding: 0 0.5rem;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.list-edit-button {
+  margin-right: 12px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: var(--check);
+}
+
+.list-edit-input::placeholder {
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--placeholder);
+}
+
+.list-content {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  border-bottom: 1px solid var(--card-shadow);
+}
+
+.list-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.list-content::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: var(--card-shadow);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: calc(100% - 12px);
+  max-height: fit-content;
+  padding: 5px 0;
+  margin: 4px 0;
+
+  border-radius: 1rem;
+  animation: itemAppear 1s ease 0s 1 forwards;
+  /* overflow: hidden; */
+  background-color: var(--item);
+}
+
+
+.item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+  transform-origin: right;
+}
+
+.item.checked::before {
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+  background-color: var(--item-check);
+}
+
+.item p {
+  padding: 4%;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  position: relative;
+  word-break: break-word;
+  line-height: 2.8rem;
+  color: var(--text);
+}
+
+.item .btns {
+  position: absolute;
+  right: 12px;
+  opacity: 0;
+  padding: 0 1rem;
+  height: 40px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 2;
+  border-radius: 20px;
+  transition: opacity 0.6s ease;
+  background-color: var(--button-container);
+}
+
+.item:hover .btns {
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.item .btns > i {
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin: 0 0.4rem;
+}
+
+.item .check {
+  color: var(--check);
+}
+
+.item .edit {
+  color: var(--edit);
+}
+
+.item .delete {
+  color: var(--delete);
+}
+
+.item:nth-child(1) {
+  margin-top: 20px;
+}
+
+.edit-item-container {
+  position: absolute;
+  display: none;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  animation: editItemDisappear 1s ease;
+  animation-fill-mode: forwards;
+  background-color: var(--item-edit);
+  border: 2px solid var(--item-edit-shadow);
+}
+
+.edit-item-container.active {
+  animation: editItemAppear 1s ease;
+  animation-fill-mode: forwards;
+  z-index: 10;
+}
+
+.edit-item-input {
+  width: 75%;
+  height: 60%;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  margin-left: 12px;
+  padding: 0 0.5rem;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+
+.edit-item-input::placeholder {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--placeholder);
+}
+
+.edit-item-button {
+  margin-right: 12px;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  font-size: 2.2rem;
+  color: var(--check);
+}
+
+.add-item {
+  align-self: center;
+  justify-self: center;
+  width: 92%;
+  height: 65%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  outline: 0;
+  border: 0;
+  border-radius: 1rem;
+  background-color: var(--add-item);
+  color: var(--text);
+}
+
+.add-item-adding {
+  display: none;
+  transition: all 0.5s ease;
+}
+
+.add-item-adding.active {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease;
+}
+
+.add-item-title {
+  margin-left: 12px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+}
+
+.add-item-button {
+  margin-right: 12px;
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: var(--add);
+}
+
+.add-item-typing {
+  display: none;
+  transition: all 0.5s ease;
+}
+
+.add-item-typing.active {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease;
+}
+
+.add-item-input {
+  border: 0;
+  margin-left: 12px;
+  outline: 0;
+  width: 70%;
+  height: 60%;
+  background-color: transparent;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text);
+}
+
+.add-item-input::placeholder {
+  color: var(--placeholder);
+}
+
+.add-item-check {
+  margin-right: 12px;
+  color: var(--theme-primary-light);
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: var(--check);
+}
+
+
+@media screen and (max-width: 320px) {
+  .list {
+    position: absolute;
+    top: 0;
+  }
+  .add-item {
+    width: 90%;
+  }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <template id="list_template">
+    <div class="list">
+      <div class="list-container">
+        <!-- List Header -->
+        <div class="list-header">
+          <h1 class="list-name">Name</h1>
+          <div class="list-header-btns">
+            <i class="fa-solid fa-pen list-edit"></i>
+            <i class="fa-solid fa-x list-delete"></i>
+          </div>
+          <div class="list-edit-container">
+            <input type="text" class="list-edit-input" placeholder="Put new list name here">
+            <button class="list-edit-button"><i class="fa-solid fa-check"></i></button>
+          </div>
+        </div>
+
+        <!-- List Content -->
+        <div class="list-content"></div>
+
+        <!-- List Footer -->
+        <div class="add-item">
+          <div class="add-item-adding active">
+            <p class="add-item-title">Add Task</p>
+            <i class="fa-solid fa-plus add-item-button"></i>
+          </div>
+          <div class="add-item-typing">
+            <input type="text" placeholder="Task name" class="add-item-input" value="">
+            <i class="fa-solid fa-check add-item-check"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <template id="item_template">
+    <div class="item">
+      <p class="item-name">A Task</p>
+
+      <div class="btns">
+        <i class="fa-solid fa-check check"></i>
+        <i class="fa-solid fa-pen edit"></i>
+        <i class="fa-solid fa-trash delete"></i>
+      </div>
+
+      <div class="edit-item-container">
+        <input type="text" class="edit-item-input" placeholder="Type new item name here" value="">
+        <button class="edit-item-button"><i class="fa-solid fa-check"></i></button>
+      </div>
+    </div>
+  </template>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TODO App</title>
+  <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/9ebca8b63b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="add-list active">
+    <div class="adding active">
+      <i class="fa-solid fa-plus"></i>
+    </div>
+    <div class="typing">
+      <div class="color_pick_container">
+        <span class="color color_1 active" data-color="1"></span>
+        <span class="color color_2" data-color="2"></span>
+        <span class="color color_3" data-color="3"></span>
+        <span class="color color_4" data-color="4"></span>
+        <span class="color color_5" data-color="5"></span>
+        <span class="color color_6" data-color="6"></span>
+        <span class="color color_7" data-color="7"></span>
+      </div>
+      <div class="typing_container">
+        <input type="text" class="add-list-input" placeholder="Add new list name here" value="">
+        <i class="fa-solid fa-plus add-list-button"></i>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js""></script>
+  </body>
+</html>
