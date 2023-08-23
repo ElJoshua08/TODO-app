@@ -243,7 +243,7 @@ function editList(list) {
 
   list_edit_input.value = list_name.innerHTML;
 
-  list.style.transform = `translateY(60px)`;
+  list.style.transform = `translate(-50%, -38%)`;
   list_edit_container.classList.add("active");
 
   list_edit_button.addEventListener("click", function () {
@@ -254,7 +254,7 @@ function editList(list) {
       list_edit_container.classList.remove("active");
 
       setTimeout(() => {
-        list.style.transform = `translateY(0px)`;
+        list.style.transform = `translate(-50%, -50%)`;
       }, 2000);
     }
   });
